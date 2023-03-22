@@ -4,8 +4,10 @@ from mavsdk import System
 drone = System()
 
 # Connect
-await drone.connect(system_address="udp://:14540")
+async def connect_drone():
+    await drone.connect(system_address="udp://:14540")
 
 # Arm and takeoff
-await drone.action.arm()
-await drone.action.takeoff()
+async def arm_and_takeoff():
+    await drone.action.arm()
+    await drone.action.takeoff()
