@@ -11,3 +11,6 @@ async def connect_drone():
 async def arm_and_takeoff():
     await drone.action.arm()
     await drone.action.takeoff()
+
+connect_drone()
+arm_and_takeoff()
