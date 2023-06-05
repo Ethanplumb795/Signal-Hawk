@@ -1,7 +1,7 @@
 from pymavlink import mavutil
 
 # Start a connection listening on a UDP port (JMavSim)
-the_connection = mavutil.mavlink_connection('/dev/ttyUSB0')
+the_connection = mavutil.mavlink_connection('udpin:localhost:14540')
 
 # Wait for the first heartbeat 
 #   This sets the system and component ID of remote system for the link
