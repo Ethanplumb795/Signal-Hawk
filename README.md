@@ -9,3 +9,5 @@ cd /path/to/Signal-Hawk/
 python3 -m venv venv # This will be ignored by .gitignore
 
 source venv/bin/activate
+
+pip3 install -r requirements.txt
