@@ -22,10 +22,30 @@ try:
 except:
     print("No SYS_STATUS received.\n")
 
+# ARM
+try:
+    msg = connection.mav.command_long_encode(
+            connection.target_system, # Target system ID
+            connection.target_component, # Target component ID
+            mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,
+            0,
+            1, # ARM
+            0, # Don't ignore safety checks
+            0,
+            0,
+            0,
+            0,
+            0
+            )
+except:
+    print("[ERROR] Error during takeoff")
 # Takeoff
 try:
     msg = connection.mav.command_long_encode(
+            connection.target_system, # Target system ID
+            connection.target_component, # Target component ID
             mavutil.mavlink.MAV_CMD_NAV_TAKEOFF,
+            0,
             0,
             0,
             0,
