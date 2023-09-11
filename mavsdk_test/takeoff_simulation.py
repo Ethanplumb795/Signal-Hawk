@@ -25,6 +25,7 @@ except:
 # Takeoff
 try:
     msg = connection.mav.command_long_encode(
+            mavutil.mavlink.MAV_CMD_NAV_TAKEOFF,
             0,
             0,
             0,
