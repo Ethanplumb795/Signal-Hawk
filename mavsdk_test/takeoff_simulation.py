@@ -1,28 +1,41 @@
 from pymavlink import mavutil
 
 # Start a connection listening on a UDP port (JMavSim)
-the_connection = mavutil.mavlink_connection('udpin:localhost:14540')
+connection = mavutil.mavlink_connection('udpin:localhost:14540')
 
 # Wait for the first heartbeat 
 #   This sets the system and component ID of remote system for the link
-the_connection.wait_heartbeat()
-print("Heartbeat from system (system %u component %u)" % (the_connection.target_system, the_connection.target_component))
+connection.wait_heartbeat()
+print("Heartbeat from system (system %u component %u)" % (connection.target_system, connection.target_component))
 
-# Once connected, use 'the_connection' to get and send messages
+# Once connected, use 'connection' to get and send messages
 try:
-    altitude = the_connection.messages['GPS_RAW_INT'].alt  # Note, you can access message fields as attributes!
-    timestamp = the_connection.time_since('GPS_RAW_INT')
+    altitude = connection.messages['GPS_RAW_INT'].alt  # Note, you can access message fields as attributes!
+    timestamp = connection.time_since('GPS_RAW_INT')
     print(f"Timestamp: {timestamp}\nAltitude: {altitude}")
 except:
     print('No GPS_RAW_INT message received')
 
 try:
-    msg = the_connection.recv_match(type='SYS_STATUS',blocking=True)
+    msg = connection.recv_match(type='SYS_STATUS',blocking=True)
     print(f"Status: {msg}\n")
 except:
     print("No SYS_STATUS received.\n")
 
 # Takeoff
+try:
+    msg = connection.mav.command_long_encode(
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            250
+            )
+except:
+    print("[ERROR] Error during takeoff")
+
 # Before running these commands enter the following
 # module load message
 # GUIDED
@@ -31,8 +44,8 @@ except:
 
 # Then, move the drone
 try:
-    msg = the_connection.mav.command_long_encode(
-            the_connection.target_system, # Target system ID
+    msg = connection.mav.command_long_encode(
+            connection.target_system, # Target system ID
             connection.target_component, # Target component ID
             mavutil.mavlink.SET_POSITION_TARGET_LOCAL_NED, # ID of command to send
             0,      # System Time since boot (ms)
@@ -57,4 +70,4 @@ try:
     else:
         print("Command not accepted.")
 except:
-    print("[ERROR] ") # look up exceptions in Python
+    print("[ERROR] Unable to move drone") # look up exceptions in Python
