@@ -1,4 +1,7 @@
 aiogrpc==1.8
+future==0.18.3
 grpcio==1.51.3
+lxml==4.9.3
 mavsdk==1.4.4
 protobuf==3.20.1
+pymavlink==2.4.40
