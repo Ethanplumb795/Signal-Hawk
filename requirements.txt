@@ -5,3 +5,4 @@ lxml==4.9.3
 mavsdk==1.4.4
 protobuf==3.20.1
 pymavlink==2.4.40
+pyserial==3.5
