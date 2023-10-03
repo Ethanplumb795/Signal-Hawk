@@ -30,17 +30,20 @@ try:
             mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,
             0,
             1, # ARM
-            0, # Don't ignore safety checks
+            1, # Don't ignore safety checks
             0,
             0,
             0,
             0,
             0
             )
+    print("[DEBUG] Command for arming: " + msg)
 except:
     print("[ERROR] Error during takeoff")
+
 # Takeoff
 try:
+    action.set_takeoff_altitude(3.0)
     msg = connection.mav.command_long_encode(
             connection.target_system, # Target system ID
             connection.target_component, # Target component ID
@@ -54,6 +57,7 @@ try:
             0,
             250
             )
+    print("[DEBUG] Command for takeoff: " + msg)
 except:
     print("[ERROR] Error during takeoff")
 
