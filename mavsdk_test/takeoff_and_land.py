@@ -32,7 +32,8 @@ async def run():
     await asyncio.sleep(5)
 
     await drone.action.set_current_speed(5)
-    await print_position(drone)
+    print("[DEBUG] Printing position:")
+    asyncio.ensure_future(print_position(drone))
 
     await asyncio.sleep(10)
     
@@ -46,15 +47,20 @@ async def run():
 
 async def print_status_text(drone):
     try:
+        i = 0
         async for status_text in drone.telemetry.status_text():
-            print(f"Status: {status_text.type}: {status_text.text}")
+            print(f"[DEBUG] Status: {status_text.type}: {status_text.text}")
+            if i > 5:
+                break
+            i += 1
     except asyncio.CancelledError:
         return
 
 
 async def print_position(drone):
-    print("[DEBUG] Drone position: ")
-    print(drone.telemetry.position())
+    async for position in drone.telemetry.position():
+        print(position)
+        break
 
 
 
