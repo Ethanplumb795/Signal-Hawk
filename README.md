@@ -11,3 +11,10 @@ python3 -m venv venv # This will be ignored by .gitignore
 source venv/bin/activate
 
 pip3 install -r requirements.txt
+
+# Building with c++
+cd Signal-Hawk/mavsdk_cpp/src/takeoff_and_land
+
+cmake -DCMAKE_PREFIX_PATH=/home/signalhawk/src/MAVSDK/install -Bbuild -H.
+
+./build/takeoff_and_land udp://:14540
