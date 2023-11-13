@@ -17,4 +17,11 @@ cd Signal-Hawk/mavsdk_cpp/src/takeoff_and_land
 
 cmake -DCMAKE_PREFIX_PATH=/home/signalhawk/src/MAVSDK/install -Bbuild -H.
 
+cmake --build build -j4
+
 ./build/takeoff_and_land udp://:14540
+
+# Run Simulation
+cd PX4-Autopilot
+
+make px4_sitl jmavsim
